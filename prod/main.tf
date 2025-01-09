@@ -10,7 +10,7 @@ module "load_balancer" {
   public_subnet_cidrs     = var.public_subnet_cidrs
   alb_logging_bucket_name = "${local.env}-${var.alb_logging_bucket_name}"
   alb_name                = "${local.env}-${var.alb_name}"
-  domain_name             = "${local.env}-${var.domain_name}"
+  domain_name             = var.domain_name
   target_group_name       = "${local.env}-${var.target_group_name}-${var.target_group_port}"
   target_group_port       = var.target_group_port
   alb_security_group_name = "${local.env}-${var.alb_security_group_name}"
@@ -23,7 +23,7 @@ module "cognito_pool" {
   source                  = "../modules/cognito_pool"
   depends_on              = [module.load_balancer]
   ssl_certificate_arn     = module.load_balancer.ssl_certificate_arn
-  cognito_domain          = "${local.env}-${var.cognito_domain}"
+  cognito_domain          = var.cognito_domain
   userpool_name           = "${local.env}-${var.userpool_name}"
   provider_name           = "${local.env}-${var.provider_name}"
   sp_metadata_url         = var.sp_metadata_url
